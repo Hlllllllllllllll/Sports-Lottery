@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>条款通 ClauseLens · 合同语义抽取与风险研判</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <div class="logo">条款通</div>
+      <div class="sub">ClauseLens · 把混乱的合同文本，变成可信任的结构化判断</div>
+    </div>
+    <div class="tag">schema 驱动的语义抽取与研判 · MVP</div>
+  </header>
+
+  <main class="wrap">
+    <section class="panel input-panel">
+      <div class="row">
+        <label class="lbl" for="schema">合同类型</label>
+        <select id="schema" class="sel"></select>
+        <button id="sample" class="ghost" type="button">载入示例</button>
+      </div>
+      <textarea id="input" class="ta" placeholder="在此粘贴合同全文，点击「开始研判」…"></textarea>
+      <button id="run" class="primary" type="button">开始研判</button>
+
+      <details class="ai">
+        <summary>AI 增强分析（可选）</summary>
+        <p class="hint">基线研判由内置规则引擎完成、无需联网即可运行。填入你自己的大模型 API Key 可获得更深度的语义分析（浏览器直连可能受 CORS 限制，生产环境建议经自有后端代理）。</p>
+        <div class="row">
+          <select id="aiProv" class="sel">
+            <option value="deepseek">DeepSeek</option>
+            <option value="openai">OpenAI</option>
+            <option value="anthropic">Anthropic</option>
+          </select>
+          <input id="aiKey" class="key" type="password" placeholder="sk-... API Key" />
+          <button id="aiBtn" class="ghost" type="button">AI 增强</button>
+        </div>
+        <pre id="aiMsg" class="ai-msg"></pre>
+      </details>
+    </section>
+
+    <section class="panel output-panel" id="output" hidden>
+      <h2 class="h2">抽取字段</h2>
+      <div id="fields" class="fields"></div>
+
+      <h2 class="h2">风险研判</h2>
+      <div id="risks" class="risks"></div>
+
+      <div class="json-head">
+        <h2 class="h2">结构化 JSON</h2>
+        <button id="copy" class="ghost sm" type="button">复制 JSON</button>
+      </div>
+      <pre id="json" class="json"></pre>
+    </section>
+  </main>
+
+  <footer class="foot">
+    本工具基于规则与公开法条自动研判，<strong>不构成法律意见</strong>；重大事宜请咨询执业律师。
+  </footer>
+
+  <script src="engine.js"></script>
+  <script src="schemas.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
