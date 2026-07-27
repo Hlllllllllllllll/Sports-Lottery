@@ -27,13 +27,32 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   color: var(--ink);
   line-height: 1.6;
-  background:
-    radial-gradient(1100px 560px at 82% -12%, #d7f1ec 0%, transparent 58%),
-    radial-gradient(900px 480px at -6% 0%, #e6edfb 0%, transparent 55%),
-    var(--bg);
+  background: var(--bg);
   min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* 艺术感：缓慢漂浮的柔光色块 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10% -10% -10% -10%;
+  z-index: -1;
+  background:
+    radial-gradient(440px 440px at 12% 16%, rgba(20, 184, 166, .20), transparent 62%),
+    radial-gradient(520px 520px at 88% 10%, rgba(124, 58, 237, .16), transparent 62%),
+    radial-gradient(500px 500px at 72% 94%, rgba(244, 114, 182, .14), transparent 62%),
+    radial-gradient(420px 420px at 30% 80%, rgba(37, 99, 235, .12), transparent 62%);
+  filter: blur(6px);
+  animation: floatBg 20s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+@keyframes floatBg {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(0, -22px, 0) scale(1.04); }
 }
 
 /* ---------- 顶部导航 ---------- */
@@ -81,6 +100,17 @@ body {
   position: relative;
   overflow: hidden;
 }
+.hero::before {
+  content: "";
+  position: absolute;
+  right: -70px; top: -70px;
+  width: 300px; height: 300px;
+  background: conic-gradient(from 0deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, .3), rgba(255, 255, 255, 0));
+  border-radius: 50%;
+  opacity: .55;
+  animation: spin 26s linear infinite;
+  pointer-events: none;
+}
 .hero::after {
   content: "";
   position: absolute; inset: 0;
@@ -93,6 +123,17 @@ body {
   max-width: 1120px; margin: 0 auto;
   padding: 46px 26px 40px;
   position: relative; z-index: 1;
+  animation: fadeUp .6s ease both;
+}
+.eyebrow {
+  display: inline-block;
+  font-size: 11.5px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 5px 12px; margin-bottom: 14px;
+  background: rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
 }
 .hero h1 { margin: 0 0 10px; font-size: 30px; font-weight: 700; letter-spacing: .5px; }
 .hero p { margin: 0; max-width: 620px; font-size: 14.5px; color: rgba(255, 255, 255, .86); }
@@ -103,11 +144,22 @@ body {
   margin: 26px auto 8px;
   padding: 0 22px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
   gap: 22px;
   align-items: start;
 }
-@media (max-width: 880px) { .wrap { grid-template-columns: 1fr; } }
+/* 打开时输入区居中；研判后切换为左右双栏 */
+.input-panel { width: 100%; max-width: 780px; }
+body.split .wrap { grid-template-columns: 1fr 1fr; justify-items: stretch; }
+body.split .input-panel { max-width: none; }
+@media (min-width: 881px) {
+  body.split .input-panel { position: sticky; top: 90px; }
+}
+@media (max-width: 880px) {
+  .wrap { grid-template-columns: 1fr; }
+  body.split .wrap { grid-template-columns: 1fr; }
+}
 
 .panel {
   background: var(--panel);
@@ -115,6 +167,7 @@ body {
   border-radius: var(--radius);
   padding: 20px;
   box-shadow: var(--shadow);
+  width: 100%;
 }
 .output-panel { animation: fadeUp .45s ease both; }
 
@@ -181,6 +234,24 @@ body {
 }
 .ghost.sm { padding: 6px 11px; font-size: 12.5px; }
 .ghost:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-soft); }
+
+/* 醒目的导出按钮 */
+.copy-accent {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 15px;
+  font-size: 13px; font-weight: 600; color: #fff;
+  border: none; border-radius: 11px; cursor: pointer;
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 55%, #c026d3 100%);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, .34), inset 0 1px 0 rgba(255, 255, 255, .25);
+  transition: transform .14s ease, box-shadow .18s ease, filter .18s ease;
+}
+.copy-accent svg { display: block; }
+.copy-accent:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  box-shadow: 0 12px 26px rgba(124, 58, 237, .46), inset 0 1px 0 rgba(255, 255, 255, .3);
+}
+.copy-accent:active { transform: translateY(0); }
 
 .ai { margin-top: 18px; border-top: 1px dashed var(--line); padding-top: 14px; }
 .ai summary { cursor: pointer; font-size: 13px; color: var(--brand); font-weight: 600; list-style: none; }
