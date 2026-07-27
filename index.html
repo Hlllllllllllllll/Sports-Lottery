@@ -8,12 +8,24 @@
 </head>
 <body>
   <header class="top">
-    <div class="brand">
-      <div class="logo">条款通</div>
-      <div class="sub">ClauseLens · 把混乱的合同文本，变成可信任的结构化判断</div>
+    <div class="top-inner">
+      <div class="brand">
+        <div class="logo-mark">条</div>
+        <div class="brand-txt">
+          <div class="logo">条款通 <span class="en">ClauseLens</span></div>
+          <div class="sub">把混乱的合同文本，变成可信任的结构化判断</div>
+        </div>
+      </div>
+      <div class="tag">schema 驱动 · 语义抽取与研判</div>
     </div>
-    <div class="tag">schema 驱动的语义抽取与研判 · MVP</div>
   </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>合同风险，一眼看清</h1>
+      <p>粘贴你的房屋租赁合同，规则引擎即时抽取关键条款、对照《民法典》标注风险。全程在你的浏览器本地完成，无需上传、无需联网。</p>
+    </div>
+  </section>
 
   <main class="wrap">
     <section class="panel input-panel">
@@ -23,7 +35,7 @@
         <button id="sample" class="ghost" type="button">载入示例</button>
       </div>
       <textarea id="input" class="ta" placeholder="在此粘贴合同全文，点击「开始研判」…"></textarea>
-      <button id="run" class="primary" type="button">开始研判</button>
+      <button id="run" class="primary" type="button"><span class="run-txt">开始研判</span></button>
 
       <details class="ai">
         <summary>AI 增强分析（可选）</summary>
@@ -42,17 +54,16 @@
     </section>
 
     <section class="panel output-panel" id="output" hidden>
-      <h2 class="h2">抽取字段</h2>
+      <div id="summary" class="summary"></div>
+
+      <div class="sec-head">
+        <h2 class="h2">抽取字段</h2>
+        <button id="copy" class="ghost sm" type="button">导出报告</button>
+      </div>
       <div id="fields" class="fields"></div>
 
       <h2 class="h2">风险研判</h2>
       <div id="risks" class="risks"></div>
-
-      <div class="json-head">
-        <h2 class="h2">结构化 JSON</h2>
-        <button id="copy" class="ghost sm" type="button">复制 JSON</button>
-      </div>
-      <pre id="json" class="json"></pre>
     </section>
   </main>
 
