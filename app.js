@@ -57,6 +57,7 @@
   function render(res) {
     if (res.error) { out.hidden = true; return; }
     out.hidden = false;
+    document.body.classList.add("split");
 
     // 风险概览
     const counts = { high: 0, mid: 0, low: 0, info: 0 };
