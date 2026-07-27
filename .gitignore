@@ -1,0 +1,8 @@
+# WorkBuddy 运行时/记忆目录，不纳入仓库
+.workbuddy/
+
+# 系统/临时
+*.log
+.DS_Store
+Thumbs.db
+__pycache__/
