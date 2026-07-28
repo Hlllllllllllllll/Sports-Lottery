@@ -19,7 +19,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="条款通 ClauseLens · 房屋租赁合同风险研判" />
   <meta name="twitter:description" content="粘贴合同，AI 规则引擎秒级抽取条款并对照《民法典》标风险。免费、本地运行、保护隐私。" />
-  <meta name="twitter:image" content="https://hlllllllllllllll.github.io/Sports-Lottery/og-image.png" />
+  <meta name="twitter:image" content="https://hlllllllllllllll.github.io/Sports-Lottery/og-en.png" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif'>条</text></svg>" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -88,6 +88,32 @@
     </section>
   </main>
 
+  <section class="faq">
+    <h2 class="faq-title">常见问题</h2>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary>租房合同有哪些常见风险要注意？</summary>
+        <p>高频风险包括：押金超过两个月租金、租期异常长、房东单方涨租、限制转租，以及「一切损失概不负责」这类免责条款。把合同贴进条款通，会对照《民法典》逐条标出风险等级与对应法条。</p>
+      </details>
+      <details class="faq-item">
+        <summary>押金收几个月合法？收多了有风险吗？</summary>
+        <p>根据《民法典》及相关规定，租房押金通常由双方约定，但实践中超过两个月租金的押金对租客资金占用大、退租时易生纠纷。条款通会把「押金 &gt; 两月租金」标记为高风险，提醒你谈判。</p>
+      </details>
+      <details class="faq-item">
+        <summary>合同里写「一切损失概不负责」有效吗？</summary>
+        <p>此类单方免除出租人主要责任、加重承租人责任的条款，可能因排除对方主要权利而被认定无效或可被撤销。条款通会将其识别为高风险条款，建议删除或协商修改。</p>
+      </details>
+      <details class="faq-item">
+        <summary>条款通安全吗？我的合同会被上传吗？</summary>
+        <p>基线研判完全在你的浏览器本地运行，合同文本不会上传到任何服务器，适合处理含个人信息的真实合同。AI 增强为可选功能，需你自带大模型 Key，且建议经自有后端代理。</p>
+      </details>
+      <details class="faq-item">
+        <summary>条款通收费吗？支持哪些合同？</summary>
+        <p>当前房屋租赁合同研判免费使用；劳动合同等更多类型已在 schema 中预留扩展。所有结果由规则引擎自动生成，仅供参考，重大事宜请咨询执业律师。</p>
+      </details>
+    </div>
+  </section>
+
   <footer class="foot">
     本工具基于规则与公开法条自动研判，<strong>不构成法律意见</strong>；重大事宜请咨询执业律师。
   </footer>
@@ -106,6 +132,18 @@
     "description": "粘贴房屋租赁合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险。浏览器本地运行，免费、无需上传。",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
     "featureList": "合同字段抽取、风险条款研判、民法典法条引用、本地隐私保护"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "租房合同有哪些常见风险要注意？", "acceptedAnswer": { "@type": "Answer", "text": "常见风险：押金超过两个月租金、租期异常长、房东单方涨租、限制转租、以及一切损失概不负责的免责条款。条款通会按民法典逐条标出风险等级与法条。" } },
+      { "@type": "Question", "name": "押金收几个月合法？收多了有风险吗？", "acceptedAnswer": { "@type": "Answer", "text": "押金一般由双方约定，但超过两个月租金会占用租客资金、退租易生纠纷。条款通把押金大于两月租金标记为高风险。" } },
+      { "@type": "Question", "name": "合同里写一切损失概不负责有效吗？", "acceptedAnswer": { "@type": "Answer", "text": "单方免除出租人主要责任、加重承租人责任的条款，可能因排除对方主要权利而无效或可撤销。条款通会识别为高风险并建议修改。" } },
+      { "@type": "Question", "name": "条款通安全吗？合同会被上传吗？", "acceptedAnswer": { "@type": "Answer", "text": "基线研判完全在浏览器本地运行，合同不上传任何服务器；AI 增强为可选，需自带大模型 Key。" } }
+    ]
   }
   </script>
 </body>
