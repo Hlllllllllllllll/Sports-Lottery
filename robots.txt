@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hlllllllllllllll.github.io/Sports-Lottery/sitemap.xml
