@@ -345,6 +345,35 @@ body.split .input-panel { max-width: none; }
   border: 1px solid #c7ece4;
 }
 
+/* ---------- 常见问题 FAQ ---------- */
+.faq {
+  max-width: 1120px;
+  margin: 8px auto 0;
+  padding: 0 22px 8px;
+}
+.faq-title { font-size: 20px; font-weight: 700; margin: 6px 0 14px; color: var(--ink); }
+.faq-list {
+  display: grid; gap: 0;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 4px 18px;
+  box-shadow: var(--shadow);
+}
+.faq-item { border-bottom: 1px solid var(--line); padding: 13px 2px; }
+.faq-item:last-child { border-bottom: none; }
+.faq-item summary {
+  cursor: pointer; font-size: 15px; font-weight: 600; color: var(--ink);
+  list-style: none; padding-right: 26px; position: relative;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after {
+  content: "+"; position: absolute; right: 0; top: -1px;
+  font-size: 22px; line-height: 1; color: var(--brand); font-weight: 700;
+}
+.faq-item[open] summary::after { content: "\2212"; }
+.faq-item p { margin: 10px 0 4px; font-size: 13.5px; color: var(--muted); line-height: 1.75; }
+
 /* ---------- 页脚 ---------- */
 .foot { text-align: center; font-size: 12px; color: var(--muted); padding: 22px 18px 30px; }
 .foot strong { color: var(--high); }
