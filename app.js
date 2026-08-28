@@ -1,7 +1,8 @@
 (function () {
   "use strict";
 
-  const schemaSel = document.getElementById("schema");
+  let schemaId = "rental";
+  const seg = document.getElementById("schemaSeg");
   const input = document.getElementById("input");
   const runBtn = document.getElementById("run");
   const sampleBtn = document.getElementById("sample");
@@ -19,12 +20,21 @@
   const SEV_TEXT = { high: "高风险", mid: "中风险", low: "低风险", info: "提示" };
   const SEV_ORDER = { high: 0, mid: 1, low: 2, info: 3 };
 
-  Object.values(window.SCHEMAS).forEach((s) => {
-    const o = document.createElement("option");
-    o.value = s.id;
-    o.textContent = s.name;
-    schemaSel.appendChild(o);
-  });
+  function renderSeg() {
+    seg.innerHTML = "";
+    Object.values(window.SCHEMAS).forEach((s) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "seg-item" + (s.id === schemaId ? " active" : "");
+      b.textContent = s.name;
+      b.addEventListener("click", () => {
+        schemaId = s.id;
+        renderSeg();
+      });
+      seg.appendChild(b);
+    });
+  }
+  renderSeg();
 
   let lastReport = "";
 
@@ -120,9 +130,7 @@
       risksBox.appendChild(card);
     });
 
-    const schemaName = schemaSel.options[schemaSel.selectedIndex]
-      ? schemaSel.options[schemaSel.selectedIndex].textContent
-      : "";
+    const schemaName = window.SCHEMAS[schemaId] ? window.SCHEMAS[schemaId].name : "";
     lastReport = buildReport(res, schemaName);
     copyBtn.textContent = "导出报告";
   }
@@ -133,7 +141,7 @@
     runBtn.classList.add("loading");
     runBtn.disabled = true;
     setTimeout(() => {
-      const res = window.runAnalysis(schemaSel.value, text);
+      const res = window.runAnalysis(schemaId, text);
       render(res);
       runBtn.classList.remove("loading");
       runBtn.disabled = false;
@@ -141,8 +149,7 @@
   });
 
   sampleBtn.addEventListener("click", () => {
-    input.value = SAMPLE;
-    schemaSel.value = "rental";
+    input.value = SAMPLES[schemaId] || "";
   });
 
   copyBtn.addEventListener("click", () => {
@@ -163,7 +170,7 @@
     aiMsg.textContent = "调用中…";
     aiMsg.className = "ai-msg";
     try {
-      const r = await callAI(text, schemaSel.value, key, aiProv.value);
+      const r = await callAI(text, schemaId, key, aiProv.value);
       aiMsg.textContent = "AI 增强结果：\n" + r;
       aiMsg.className = "ai-msg ok";
     } catch (e) {
@@ -206,14 +213,36 @@
     return d.choices[0].message.content;
   }
 
-  const SAMPLE =
-    "房屋租赁合同\n" +
-    "甲方（出租方）：张三\n" +
-    "乙方（承租方）：李四\n" +
-    "房屋坐落：北京市朝阳区幸福小区1号楼2单元301室\n" +
-    "租赁期限：2024年1月1日至2046年1月1日\n" +
-    "月租金：5000元\n" +
-    "押金：20000元\n" +
-    "租金按季支付。出租人有权随时涨租。承租人不得转租。\n" +
-    "本合同一切损失概不负责。";
+  const SAMPLES = {
+    rental:
+      "房屋租赁合同\n" +
+      "甲方（出租方）：张三\n" +
+      "乙方（承租方）：李四\n" +
+      "房屋坐落：北京市朝阳区幸福小区1号楼2单元301室\n" +
+      "租赁期限：2024年1月1日至2046年1月1日\n" +
+      "月租金：5000元\n" +
+      "押金：20000元\n" +
+      "租金按季支付。出租人有权随时涨租。承租人不得转租。\n" +
+      "本合同一切损失概不负责。",
+    labor:
+      "劳动合同\n" +
+      "用人单位（甲方）：某某科技有限公司\n" +
+      "劳动者（乙方）：王五\n" +
+      "合同期限：固定期限 2 年\n" +
+      "试用期：6个月\n" +
+      "月工资：8000元\n" +
+      "乙方违反合同约定需支付违约金5000元",
+    sale:
+      "买卖合同\n" +
+      "卖方（甲方）：北京某某贸易有限公司\n" +
+      "买方（乙方）：李四\n" +
+      "标的：品牌笔记本电脑 ThinkBook 14\n" +
+      "数量：10台\n" +
+      "总价款：60000元\n" +
+      "定金：20000元\n" +
+      "交付时间：2026年9月1日\n" +
+      "付款方式：货到付款\n" +
+      "质保：整机质保一年\n" +
+      "违约责任：逾期付款按日千分之五支付违约金。",
+  };
 })();
