@@ -160,6 +160,21 @@ window.SCHEMAS = {
         law: "《民法典》第726条：出租人出卖租赁房屋的，承租人在同等条件下享有优先购买权。",
         check: (t) => (/优先购买权/.test(t) ? true : null),
       },
+      {
+        id: "noJurisdiction", title: "未约定争议解决 / 管辖", severity: "info",
+        law: "建议明确争议解决方式（诉讼/仲裁）与管辖地，便于日后维权时快速确定受理机构。",
+        check: (t) => (/争议解决|管辖|仲裁|诉讼/.test(t) ? null : true),
+      },
+      {
+        id: "utilities", title: "水电物业等费用承担未约定", severity: "info",
+        law: "建议明确水、电、燃气、物业、供暖等费用的承担方，避免履约期间因费用扯皮。",
+        check: (t) => (/水电|物业|供暖|燃气|费用承担|费用由/.test(t) ? null : true),
+      },
+      {
+        id: "renewTerm", title: "未约定续租 / 到期处理方式", severity: "info",
+        law: "建议约定租期届满后的续租条件或搬离期限，避免到期僵局。",
+        check: (t) => (/续租|到期|届满|搬离|腾退/.test(t) ? null : true),
+      },
     ],
   },
 
@@ -228,6 +243,129 @@ window.SCHEMAS = {
         id: "illegalPenalty", title: "违约金约定可能违法", severity: "mid",
         law: "《劳动合同法》第25条：除培训服务期与竞业限制外，不得约定由劳动者承担违约金。",
         check: (t) => (/违约金/.test(t) && !/竞业限制|培训服务期|服务期/.test(t) ? true : null),
+      },
+    ],
+  },
+
+  // ---- 买卖合同 ----
+  sale: {
+    id: "sale",
+    name: "买卖合同",
+    blurb: "抽取买卖双方、标的、数量、价款、定金、交付与质保等条款，研判标的约定、定金上限、交付验收等风险。",
+    fields: [
+      {
+        key: "seller", label: "卖方（甲方）",
+        extract: (t) => ({
+          display: window.H.pick(t, [
+            /卖方[（(]?甲方[）)]?[:：]?\s*([^\n，,。；;]{2,20})/,
+            /甲方[（(]?卖方[）)]?[:：]?\s*([^\n，,。；;]{2,20})/,
+            /卖方[:：]\s*([^\n，,。；;]{2,20})/,
+          ]),
+          value: null,
+        }),
+      },
+      {
+        key: "buyer", label: "买方（乙方）",
+        extract: (t) => ({
+          display: window.H.pick(t, [
+            /买方[（(]?乙方[）)]?[:：]?\s*([^\n，,。；;]{2,20})/,
+            /乙方[（(]?买方[）)]?[:：]?\s*([^\n，,。；;]{2,20})/,
+            /买方[:：]\s*([^\n，,。；;]{2,20})/,
+          ]),
+          value: null,
+        }),
+      },
+      {
+        key: "subject", label: "标的 / 品名",
+        extract: (t) => ({
+          display: window.H.pick(t, [/标的[:：]?\s*([^\n，,。；;]{2,30})/, /标的物[:：]?\s*([^\n，,。；;]{2,30})/, /品名[:：]?\s*([^\n，,。；;]{2,30})/]),
+          value: null,
+        }),
+      },
+      {
+        key: "quantity", label: "数量",
+        extract: (t) => {
+          const m = t.match(/数量[:：]?\s*([0-9,]+)\s*(件|台|套|个|kg|吨|千克|平方米|平米|台套)?/);
+          return { display: m ? (m[1] + (m[2] || "")) : null, value: m ? window.H.parseCNY(m[1]) : null };
+        },
+      },
+      {
+        key: "price", label: "价款（总价）",
+        extract: (t) => {
+          const m = t.match(/(?:总价款|总价|价款|合同金额|金额)[:：]?\s*([0-9,]+)\s*元/) ||
+            t.match(/单价[:：]?\s*([0-9,]+)\s*元/);
+          if (!m) return { display: null, value: null };
+          const v = window.H.parseCNY(m[1]);
+          return { display: "¥" + v.toLocaleString(), value: v };
+        },
+      },
+      {
+        key: "deposit", label: "定金",
+        extract: (t) => {
+          const m = t.match(/定[金款][：:]?\s*([0-9,]+)\s*元/) || t.match(/订金[:：]?\s*([0-9,]+)\s*元/);
+          if (!m) return { display: null, value: null };
+          const v = window.H.parseCNY(m[1]);
+          return { display: "¥" + v.toLocaleString(), value: v };
+        },
+      },
+      {
+        key: "delivery", label: "交付 / 交货",
+        extract: (t) => ({
+          display: window.H.pick(t, [/交付[:：]?([^\n，,。；;]{2,16})/, /交货时间[:：]?([^\n，,。；;]{2,16})/, /交付地点[:：]?([^\n，,。；;]{2,16})/]),
+          value: null,
+        }),
+      },
+      {
+        key: "payment", label: "付款方式",
+        extract: (t) => ({
+          display: window.H.pick(t, [/付款方式[:：]?([^\n，,。；;]{2,16})/, /(一次性付款|分期付款|货到付款|先款后货|月结)/]),
+          value: null,
+        }),
+      },
+      {
+        key: "warranty", label: "质保 / 验收约定",
+        extract: (t) => ({ display: /质保|保修|质量保证|验收|检验/.test(t) ? "有" : "无", value: null }),
+      },
+      {
+        key: "breach", label: "违约 / 违约金条款",
+        extract: (t) => ({ display: /违约|违约金|赔偿金|滞纳金/.test(t) ? "有" : "无", value: null }),
+      },
+    ],
+    risks: [
+      {
+        id: "noSubject", title: "标的约定不明", severity: "high",
+        law: "《民法典》第596条：买卖合同应约定标的名称、数量、质量等；标的模糊极易引发履约纠纷。",
+        check: (t, fields, by) => { return !(by.subject.display); },
+      },
+      {
+        id: "noPrice", title: "价款未明确约定", severity: "high",
+        law: "《民法典》第596、511条：价款是买卖合同主要条款，未约定或约定不明易生争议，须及时补充协议。",
+        check: (t, fields, by) => { return !by.price.value; },
+      },
+      {
+        id: "deposit20", title: "定金超过主合同标的额 20%", severity: "high",
+        law: "《民法典》第586条：定金不得超过主合同标的额的20%，超过部分不产生定金效力。",
+        check: (t, fields, by) => { const d = by.deposit.value, p = by.price.value; return d && p && !isNaN(d) && !isNaN(p) && d > 0.2 * p; },
+      },
+      {
+        id: "noDelivery", title: "未约定交付与验收", severity: "mid",
+        law: "建议明确交付时间、地点与验收标准，避免履约节点与质量争议。",
+        check: (t) => (/交付|交货|验收|检验/.test(t) ? null : true),
+      },
+      {
+        id: "breachRisk", title: "违约金 / 责任条款需复核", severity: "mid",
+        law: "《民法典》第585条：违约金过分高于造成的损失的，可请求法院或仲裁机构予以适当减少；建议约定合理比例。",
+        check: (t) => (/违约金|赔偿金|滞纳金/.test(t) ? true : null),
+      },
+      {
+        id: "noWarranty", title: "未约定质量 / 质保", severity: "info",
+        law: "《民法典》第615—617条对标的物质量、包装、检验有法定要求，建议书面明确保修期与质保标准。",
+        check: (t) => (/质保|保修|质量保证|验收标准|质量标准/.test(t) ? null : true),
+      },
+      {
+        id: "noJurisdiction", title: "未约定争议解决 / 管辖", severity: "info",
+        law: "建议约定争议解决方式（诉讼/仲裁）与管辖地，便于日后维权。",
+        check: (t) => (/争议解决|管辖|仲裁|诉讼/.test(t) ? null : true),
       },
     ],
   },
