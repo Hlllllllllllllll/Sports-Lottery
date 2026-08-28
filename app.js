@@ -20,19 +20,45 @@
   const SEV_TEXT = { high: "高风险", mid: "中风险", low: "低风险", info: "提示" };
   const SEV_ORDER = { high: 0, mid: 1, low: 2, info: 3 };
 
+  const hint = document.getElementById("schemaHint");
+
+  // 按 group 分组渲染标签墙
   function renderSeg() {
     seg.innerHTML = "";
+    const order = [];
+    const map = {};
     Object.values(window.SCHEMAS).forEach((s) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.className = "seg-item" + (s.id === schemaId ? " active" : "");
-      b.textContent = s.name;
-      b.addEventListener("click", () => {
-        schemaId = s.id;
-        renderSeg();
-      });
-      seg.appendChild(b);
+      const g = s.group || "其他";
+      if (!map[g]) { map[g] = []; order.push(g); }
+      map[g].push(s);
     });
+    order.forEach((g) => {
+      const row = document.createElement("div");
+      row.className = "seg-group";
+      const lab = document.createElement("span");
+      lab.className = "seg-glab";
+      lab.textContent = g;
+      row.appendChild(lab);
+      const chips = document.createElement("div");
+      chips.className = "seg-chips";
+      map[g].forEach((s) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "seg-item" + (s.id === schemaId ? " active" : "");
+        b.textContent = s.name;
+        b.addEventListener("click", () => {
+          schemaId = s.id;
+          renderSeg();
+        });
+        chips.appendChild(b);
+      });
+      row.appendChild(chips);
+      seg.appendChild(row);
+    });
+    const cur = window.SCHEMAS[schemaId];
+    if (cur && hint) hint.textContent = cur.blurb || "";
+    const cnt = document.getElementById("typeCount");
+    if (cnt) cnt.textContent = "共 " + Object.keys(window.SCHEMAS).length + " 类 · 点标签切换";
   }
   renderSeg();
 
@@ -149,7 +175,7 @@
   });
 
   sampleBtn.addEventListener("click", () => {
-    input.value = SAMPLES[schemaId] || "";
+    input.value = window.SAMPLES[schemaId] || "";
   });
 
   copyBtn.addEventListener("click", () => {
@@ -213,36 +239,4 @@
     return d.choices[0].message.content;
   }
 
-  const SAMPLES = {
-    rental:
-      "房屋租赁合同\n" +
-      "甲方（出租方）：张三\n" +
-      "乙方（承租方）：李四\n" +
-      "房屋坐落：北京市朝阳区幸福小区1号楼2单元301室\n" +
-      "租赁期限：2024年1月1日至2046年1月1日\n" +
-      "月租金：5000元\n" +
-      "押金：20000元\n" +
-      "租金按季支付。出租人有权随时涨租。承租人不得转租。\n" +
-      "本合同一切损失概不负责。",
-    labor:
-      "劳动合同\n" +
-      "用人单位（甲方）：某某科技有限公司\n" +
-      "劳动者（乙方）：王五\n" +
-      "合同期限：固定期限 2 年\n" +
-      "试用期：6个月\n" +
-      "月工资：8000元\n" +
-      "乙方违反合同约定需支付违约金5000元",
-    sale:
-      "买卖合同\n" +
-      "卖方（甲方）：北京某某贸易有限公司\n" +
-      "买方（乙方）：李四\n" +
-      "标的：品牌笔记本电脑 ThinkBook 14\n" +
-      "数量：10台\n" +
-      "总价款：60000元\n" +
-      "定金：20000元\n" +
-      "交付时间：2026年9月1日\n" +
-      "付款方式：货到付款\n" +
-      "质保：整机质保一年\n" +
-      "违约责任：逾期付款按日千分之五支付违约金。",
-  };
 })();
