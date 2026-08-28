@@ -22,9 +22,10 @@
 
   const hint = document.getElementById("schemaHint");
 
-  // 按 group 分组渲染标签墙
-  function renderSeg() {
-    seg.innerHTML = "";
+  // 两级标签：先选大类，展开后再选具体合同类型
+  let activeGroup = null;
+
+  function buildGroups() {
     const order = [];
     const map = {};
     Object.values(window.SCHEMAS).forEach((s) => {
@@ -32,16 +33,46 @@
       if (!map[g]) { map[g] = []; order.push(g); }
       map[g].push(s);
     });
+    return { order, map };
+  }
+
+  function renderSeg() {
+    const { order, map } = buildGroups();
+    const cur = window.SCHEMAS[schemaId];
+    if (!activeGroup || !map[activeGroup]) activeGroup = cur ? (cur.group || order[0]) : order[0];
+
+    seg.innerHTML = "";
+
+    // 一级：大类
+    const cats = document.createElement("div");
+    cats.className = "seg-cats";
     order.forEach((g) => {
-      const row = document.createElement("div");
-      row.className = "seg-group";
-      const lab = document.createElement("span");
-      lab.className = "seg-glab";
-      lab.textContent = g;
-      row.appendChild(lab);
-      const chips = document.createElement("div");
-      chips.className = "seg-chips";
-      map[g].forEach((s) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "cat-item" + (g === activeGroup ? " active" : "");
+      b.innerHTML =
+        '<span class="cat-n">' + escapeHtml(g) + "</span>" +
+        '<span class="cat-c">' + map[g].length + "</span>";
+      b.addEventListener("click", () => {
+        if (activeGroup === g) {
+          activeGroup = null; // 再次点击收起
+        } else {
+          activeGroup = g;
+          // 若当前选中的合同不属于该大类，自动切到该大类第一个，避免出现「无选中项」
+          const cur = window.SCHEMAS[schemaId];
+          if (!cur || (cur.group || "其他") !== g) schemaId = map[g][0].id;
+        }
+        renderSeg();
+      });
+      cats.appendChild(b);
+    });
+    seg.appendChild(cats);
+
+    // 二级：当前大类下的具体合同类型
+    if (activeGroup && map[activeGroup]) {
+      const sub = document.createElement("div");
+      sub.className = "seg-sub";
+      map[activeGroup].forEach((s) => {
         const b = document.createElement("button");
         b.type = "button";
         b.className = "seg-item" + (s.id === schemaId ? " active" : "");
@@ -50,15 +81,21 @@
           schemaId = s.id;
           renderSeg();
         });
-        chips.appendChild(b);
+        sub.appendChild(b);
       });
-      row.appendChild(chips);
-      seg.appendChild(row);
-    });
-    const cur = window.SCHEMAS[schemaId];
-    if (cur && hint) hint.textContent = cur.blurb || "";
+      seg.appendChild(sub);
+    }
+
+    if (hint) {
+      hint.innerHTML = cur
+        ? '<b class="hint-cur">' + escapeHtml(cur.name) + "</b>" +
+          '<span class="hint-txt">' + escapeHtml(cur.blurb || "") + "</span>"
+        : "";
+    }
     const cnt = document.getElementById("typeCount");
-    if (cnt) cnt.textContent = "共 " + Object.keys(window.SCHEMAS).length + " 类 · 点标签切换";
+    if (cnt) {
+      cnt.textContent = order.length + " 大类 · " + Object.keys(window.SCHEMAS).length + " 类合同";
+    }
   }
   renderSeg();
 
@@ -161,17 +198,12 @@
     copyBtn.textContent = "导出报告";
   }
 
+  // 规则引擎为纯本地同步计算（实测约 0.15ms），直接出结果，不做人为延迟
   runBtn.addEventListener("click", () => {
     const text = input.value.trim();
     if (!text) { input.focus(); return; }
-    runBtn.classList.add("loading");
-    runBtn.disabled = true;
-    setTimeout(() => {
-      const res = window.runAnalysis(schemaId, text);
-      render(res);
-      runBtn.classList.remove("loading");
-      runBtn.disabled = false;
-    }, 380);
+    const res = window.runAnalysis(schemaId, text);
+    render(res);
   });
 
   sampleBtn.addEventListener("click", () => {
