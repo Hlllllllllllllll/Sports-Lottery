@@ -205,6 +205,21 @@ body.split .input-panel { max-width: none; }
   box-shadow: 0 0 0 3px var(--brand-soft);
 }
 
+/* 合同类型切换标签 */
+.seg { display: inline-flex; gap: 6px; padding: 4px; background: var(--brand-soft); border-radius: 12px; flex: 1; min-width: 200px; flex-wrap: wrap; }
+.seg-item {
+  flex: 1; min-width: 78px;
+  border: none; cursor: pointer;
+  padding: 8px 12px; border-radius: 9px;
+  font-size: 13.5px; font-weight: 600; color: var(--muted);
+  background: transparent; transition: all .18s ease; white-space: nowrap;
+}
+.seg-item:hover { color: var(--ink); }
+.seg-item.active {
+  background: #fff; color: var(--brand);
+  box-shadow: 0 2px 8px rgba(15, 118, 110, .16);
+}
+
 .primary {
   margin-top: 14px; width: 100%;
   padding: 12px;
