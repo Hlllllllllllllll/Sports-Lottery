@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>条款通 ClauseLens · 免费合同风险研判（租赁 / 劳动 / 买卖）</title>
-  <meta name="description" content="条款通 ClauseLens：粘贴房屋租赁、劳动、买卖等合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险点与法条。浏览器本地运行，免费、无需上传、保护隐私。" />
-  <meta name="keywords" content="合同审查,租赁合同风险,买卖合同风险,劳动合同风险,民法典,合同条款,法律风险,AI合同审查,合同研判,租房避坑" />
+  <title>条款通 ClauseLens · 免费合同风险研判（27 类合同 · 本地运行）</title>
+  <meta name="description" content="条款通 ClauseLens：覆盖房屋租赁、劳动、买卖、借款、合伙、房屋买卖、担保、股权转让、装修、教育培训、预付费会员、医美、加盟等 27 类合同。粘贴全文，规则引擎即时抽取关键条款、对照《民法典》《劳动合同法》《消费者权益保护法》标注风险点与法条。浏览器本地运行，免费、无需上传、保护隐私。" />
+  <meta name="keywords" content="合同审查,合同风险,租赁合同风险,借款合同风险,合伙协议风险,房屋买卖合同风险,劳动合同风险,装修合同风险,加盟合同风险,教育培训退费,预付费会员卡,医美协议,竞业限制,民法典,AI合同审查,合同研判,租房避坑,免费合同审查" />
   <meta name="author" content="ClauseLens" />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://hlllllllllllllll.github.io/Sports-Lottery/" />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="条款通 ClauseLens · 房屋租赁合同风险研判" />
-  <meta property="og:description" content="粘贴合同，AI 规则引擎秒级抽取条款并对照《民法典》标风险。免费、本地运行、保护隐私。" />
+  <meta property="og:title" content="条款通 ClauseLens · 27 类合同风险研判" />
+  <meta property="og:description" content="覆盖租赁、劳动、买卖、借款、合伙、担保、装修、培训、医美、加盟等 27 类。粘贴合同，秒级抽取条款并对照法条标风险。免费、本地运行、保护隐私。" />
   <meta property="og:url" content="https://hlllllllllllllll.github.io/Sports-Lottery/" />
   <meta property="og:image" content="https://hlllllllllllllll.github.io/Sports-Lottery/og-image.png" />
   <meta property="og:site_name" content="条款通 ClauseLens" />
   <meta property="og:locale" content="zh_CN" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="条款通 ClauseLens · 房屋租赁合同风险研判" />
-  <meta name="twitter:description" content="粘贴合同，AI 规则引擎秒级抽取条款并对照《民法典》标风险。免费、本地运行、保护隐私。" />
+  <meta name="twitter:title" content="条款通 ClauseLens · 27 类合同风险研判" />
+  <meta name="twitter:description" content="覆盖租赁、劳动、买卖、借款、合伙、担保、装修、培训、医美、加盟等 27 类。粘贴合同，秒级抽取条款并对照法条标风险。免费、本地运行、保护隐私。" />
   <meta name="twitter:image" content="https://hlllllllllllllll.github.io/Sports-Lottery/og-en.png" />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230f766e'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='white' font-family='sans-serif'>条</text></svg>" />
+  <link rel="icon" type="image/png" href="https://hlllllllllllllll.github.io/Sports-Lottery/clauselens_icon_144.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -39,19 +39,21 @@
 
   <section class="hero">
     <div class="hero-inner">
-      <span class="eyebrow">AI 合同审查 · 实时研判</span>
+      <span class="eyebrow">AI 合同审查 · 27 类合同 · 实时研判</span>
       <h1>合同风险，一眼看清</h1>
-      <p>粘贴你的合同（房屋租赁 / 劳动 / 买卖），规则引擎即时抽取关键条款、对照《民法典》标注风险。全程在你的浏览器本地完成，无需上传、无需联网。</p>
+      <p>覆盖房屋租赁、劳动、买卖、借款、合伙、房屋买卖、担保、股权转让、装修、教育培训、预付费会员、医美、加盟等 27 类常用与冷门合同。选好类型、粘贴全文，规则引擎即时抽取关键条款，并对照《民法典》《劳动合同法》《消费者权益保护法》标注风险点与对应法条。全程在你的浏览器本地完成，无需上传、无需联网。</p>
     </div>
   </section>
 
   <main class="wrap">
     <section class="panel input-panel">
-      <div class="row">
+      <div class="type-head">
         <label class="lbl">合同类型</label>
-        <div id="schemaSeg" class="seg"></div>
-        <button id="sample" class="ghost" type="button">载入示例</button>
+        <span class="type-count" id="typeCount"></span>
+        <button id="sample" class="ghost sm" type="button">载入示例</button>
       </div>
+      <div id="schemaSeg" class="seg"></div>
+      <div id="schemaHint" class="seg-hint"></div>
       <textarea id="input" class="ta" placeholder="在此粘贴合同全文，点击「开始研判」…"></textarea>
       <button id="run" class="primary" type="button"><span class="run-txt">开始研判</span></button>
 
@@ -109,7 +111,15 @@
       </details>
       <details class="faq-item">
         <summary>条款通收费吗？支持哪些合同？</summary>
-        <p>当前房屋租赁、劳动、买卖三类合同研判均免费使用，更多类型将持续在 schema 中扩展。所有结果由规则引擎自动生成，仅供参考，重大事宜请咨询执业律师。</p>
+        <p>全部 27 类合同均免费使用，覆盖：常用合同（房屋租赁、劳动合同、买卖合同、借款合同、房屋买卖、合伙协议）、资金财务（保证担保、股权转让、融资租赁）、服务消费（装修承揽、服务委托、教育培训、预付费会员、医疗美容、婚庆摄影、物业服务、加盟特许）、财产交易（设备车辆租赁、货物运输、保管仓储、居间中介、赠与）、商业专项（技术开发、保密竞业、建设工程施工、土地承包流转、著作权出版）。所有结果由规则引擎自动生成，仅供参考，重大事宜请咨询执业律师。</p>
+      </details>
+      <details class="faq-item">
+        <summary>借钱给别人的利息，约定多少才受法律保护？</summary>
+        <p>《民法典》第 680 条禁止高利放贷。民间借贷利率以合同成立时一年期 LPR 的四倍为司法保护上限（当前约 13.8%/年），超出部分不受保护。另外，利息不得预先从本金中扣除（俗称「砍头息」），否则应按实际收到的金额计息。条款通会自动折算年化利率并标出超限风险。</p>
+      </details>
+      <details class="faq-item">
+        <summary>健身房、培训班办的卡，商家写「概不退费、过期作废」怎么办？</summary>
+        <p>这类条款属于典型的无效格式条款。《消费者权益保护法》第 26 条禁止经营者以格式条款排除或限制消费者权利；《单用途商业预付卡管理办法（试行）》规定记名卡不得设有效期，不记名卡有效期不得少于 3 年。商家停业、搬迁或未按约定提供服务的，应当退回预付款并承担利息。条款通会把「概不退费」「过期作废」直接标为高风险。</p>
       </details>
       <details class="faq-item">
         <summary>买卖合同里定金收多少才合法？</summary>
@@ -124,6 +134,7 @@
 
   <script src="engine.js"></script>
   <script src="schemas.js"></script>
+  <script src="samples.js"></script>
   <script src="app.js"></script>
   <script type="application/ld+json">
   {
@@ -133,9 +144,9 @@
     "url": "https://hlllllllllllllll.github.io/Sports-Lottery/",
     "applicationCategory": "LegalApplication",
     "operatingSystem": "Any",
-    "description": "粘贴房屋租赁、劳动、买卖等合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险。浏览器本地运行，免费、无需上传。",
+    "description": "覆盖房屋租赁、劳动、买卖、借款、合伙、担保、股权转让、装修、教育培训、预付费会员、医美、加盟等 27 类合同，粘贴全文即时抽取关键条款并对照法条标注风险。浏览器本地运行，免费、无需上传。",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
-    "featureList": "租赁合同/劳动合同/买卖合同字段抽取、风险条款研判、民法典法条引用、本地隐私保护"
+    "featureList": "27 类合同字段抽取、风险条款研判、民法典/劳动合同法/消费者权益保护法法条引用、本地隐私保护"
   }
   </script>
   <script type="application/ld+json">
@@ -147,7 +158,9 @@
       { "@type": "Question", "name": "押金收几个月合法？收多了有风险吗？", "acceptedAnswer": { "@type": "Answer", "text": "押金一般由双方约定，但超过两个月租金会占用租客资金、退租易生纠纷。条款通把押金大于两月租金标记为高风险。" } },
       { "@type": "Question", "name": "合同里写一切损失概不负责有效吗？", "acceptedAnswer": { "@type": "Answer", "text": "单方免除出租人主要责任、加重承租人责任的条款，可能因排除对方主要权利而无效或可撤销。条款通会识别为高风险并建议修改。" } },
       { "@type": "Question", "name": "条款通安全吗？合同会被上传吗？", "acceptedAnswer": { "@type": "Answer", "text": "基线研判完全在浏览器本地运行，合同不上传任何服务器；AI 增强为可选，需自带大模型 Key。" } },
-      { "@type": "Question", "name": "买卖合同里定金收多少才合法？", "acceptedAnswer": { "@type": "Answer", "text": "根据民法典第586条，定金不得超过主合同标的额的20%，超过部分不产生定金效力。条款通会把超过20%的定金标记为高风险。" } }
+      { "@type": "Question", "name": "买卖合同里定金收多少才合法？", "acceptedAnswer": { "@type": "Answer", "text": "根据民法典第586条，定金不得超过主合同标的额的20%，超过部分不产生定金效力。条款通会把超过20%的定金标记为高风险。" } },
+      { "@type": "Question", "name": "条款通支持哪些合同类型？", "acceptedAnswer": { "@type": "Answer", "text": "支持27类，包括房屋租赁、劳动合同、买卖合同、借款合同、房屋买卖、合伙协议、保证担保、股权转让、融资租赁、装修承揽、服务委托、教育培训、预付费会员、医疗美容、婚庆摄影、物业服务、加盟特许、设备车辆租赁、货物运输、保管仓储、居间中介、赠与、技术开发、保密竞业、建设工程施工、土地承包流转、著作权出版。" } },
+      { "@type": "Question", "name": "借钱给别人的利息约定多少才受法律保护？", "acceptedAnswer": { "@type": "Answer", "text": "民法典第680条禁止高利放贷，民间借贷利率以合同成立时一年期LPR四倍为司法保护上限（当前约13.8%每年），超出部分不受保护；利息也不得预先从本金中扣除。" } }
     ]
   }
   </script>
