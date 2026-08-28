@@ -353,9 +353,11 @@
   /* ==================== 核心管线 ==================== */
 
   function runAnalysis(schemaId, text) {
-    const schemas = (typeof module !== "undefined" && module.exports
-      ? require("./schemas.js")
-      : root.SCHEMAS) || {};
+    // 注意：不能引用外层包装函数的 root 参数（工厂函数内不可见，浏览器会抛 ReferenceError）
+    const schemas =
+      (typeof module !== "undefined" && module.exports
+        ? require("./schemas.js")
+        : (typeof window !== "undefined" ? window.SCHEMAS : null)) || {};
     const schema = schemas[schemaId];
     if (!schema) return { error: "schema not found: " + schemaId };
 
