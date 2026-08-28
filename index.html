@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>条款通 ClauseLens · 免费房屋租赁合同风险研判（AI 规则引擎）</title>
-  <meta name="description" content="条款通 ClauseLens：粘贴房屋租赁合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险点与法条。浏览器本地运行，免费、无需上传、保护隐私。" />
-  <meta name="keywords" content="租赁合同风险,合同审查,租房合同,民法典,合同条款,法律风险,AI合同审查,合同研判,租房避坑" />
+  <title>条款通 ClauseLens · 免费合同风险研判（租赁 / 劳动 / 买卖）</title>
+  <meta name="description" content="条款通 ClauseLens：粘贴房屋租赁、劳动、买卖等合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险点与法条。浏览器本地运行，免费、无需上传、保护隐私。" />
+  <meta name="keywords" content="合同审查,租赁合同风险,买卖合同风险,劳动合同风险,民法典,合同条款,法律风险,AI合同审查,合同研判,租房避坑" />
   <meta name="author" content="ClauseLens" />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="https://hlllllllllllllll.github.io/Sports-Lottery/" />
@@ -41,15 +41,15 @@
     <div class="hero-inner">
       <span class="eyebrow">AI 合同审查 · 实时研判</span>
       <h1>合同风险，一眼看清</h1>
-      <p>粘贴你的房屋租赁合同，规则引擎即时抽取关键条款、对照《民法典》标注风险。全程在你的浏览器本地完成，无需上传、无需联网。</p>
+      <p>粘贴你的合同（房屋租赁 / 劳动 / 买卖），规则引擎即时抽取关键条款、对照《民法典》标注风险。全程在你的浏览器本地完成，无需上传、无需联网。</p>
     </div>
   </section>
 
   <main class="wrap">
     <section class="panel input-panel">
       <div class="row">
-        <label class="lbl" for="schema">合同类型</label>
-        <select id="schema" class="sel"></select>
+        <label class="lbl">合同类型</label>
+        <div id="schemaSeg" class="seg"></div>
         <button id="sample" class="ghost" type="button">载入示例</button>
       </div>
       <textarea id="input" class="ta" placeholder="在此粘贴合同全文，点击「开始研判」…"></textarea>
@@ -109,7 +109,11 @@
       </details>
       <details class="faq-item">
         <summary>条款通收费吗？支持哪些合同？</summary>
-        <p>当前房屋租赁合同研判免费使用；劳动合同等更多类型已在 schema 中预留扩展。所有结果由规则引擎自动生成，仅供参考，重大事宜请咨询执业律师。</p>
+        <p>当前房屋租赁、劳动、买卖三类合同研判均免费使用，更多类型将持续在 schema 中扩展。所有结果由规则引擎自动生成，仅供参考，重大事宜请咨询执业律师。</p>
+      </details>
+      <details class="faq-item">
+        <summary>买卖合同里定金收多少才合法？</summary>
+        <p>根据《民法典》第586条，定金不得超过主合同标的额的 20%，超过部分不产生定金效力。例如 6 万元货款，定金最多 1.2 万元；条款通会把超过 20% 的定金标记为高风险。</p>
       </details>
     </div>
   </section>
@@ -129,9 +133,9 @@
     "url": "https://hlllllllllllllll.github.io/Sports-Lottery/",
     "applicationCategory": "LegalApplication",
     "operatingSystem": "Any",
-    "description": "粘贴房屋租赁合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险。浏览器本地运行，免费、无需上传。",
+    "description": "粘贴房屋租赁、劳动、买卖等合同全文，AI 规则引擎即时抽取关键条款、对照《民法典》标注风险。浏览器本地运行，免费、无需上传。",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
-    "featureList": "合同字段抽取、风险条款研判、民法典法条引用、本地隐私保护"
+    "featureList": "租赁合同/劳动合同/买卖合同字段抽取、风险条款研判、民法典法条引用、本地隐私保护"
   }
   </script>
   <script type="application/ld+json">
@@ -142,7 +146,8 @@
       { "@type": "Question", "name": "租房合同有哪些常见风险要注意？", "acceptedAnswer": { "@type": "Answer", "text": "常见风险：押金超过两个月租金、租期异常长、房东单方涨租、限制转租、以及一切损失概不负责的免责条款。条款通会按民法典逐条标出风险等级与法条。" } },
       { "@type": "Question", "name": "押金收几个月合法？收多了有风险吗？", "acceptedAnswer": { "@type": "Answer", "text": "押金一般由双方约定，但超过两个月租金会占用租客资金、退租易生纠纷。条款通把押金大于两月租金标记为高风险。" } },
       { "@type": "Question", "name": "合同里写一切损失概不负责有效吗？", "acceptedAnswer": { "@type": "Answer", "text": "单方免除出租人主要责任、加重承租人责任的条款，可能因排除对方主要权利而无效或可撤销。条款通会识别为高风险并建议修改。" } },
-      { "@type": "Question", "name": "条款通安全吗？合同会被上传吗？", "acceptedAnswer": { "@type": "Answer", "text": "基线研判完全在浏览器本地运行，合同不上传任何服务器；AI 增强为可选，需自带大模型 Key。" } }
+      { "@type": "Question", "name": "条款通安全吗？合同会被上传吗？", "acceptedAnswer": { "@type": "Answer", "text": "基线研判完全在浏览器本地运行，合同不上传任何服务器；AI 增强为可选，需自带大模型 Key。" } },
+      { "@type": "Question", "name": "买卖合同里定金收多少才合法？", "acceptedAnswer": { "@type": "Answer", "text": "根据民法典第586条，定金不得超过主合同标的额的20%，超过部分不产生定金效力。条款通会把超过20%的定金标记为高风险。" } }
     ]
   }
   </script>
